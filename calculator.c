@@ -30,7 +30,7 @@ gtk_window_set_title(GTK_WINDOW(window),title);
 
 gtk_window_set_default_size(GTK_WINDOW(window), 400, 550);
 
-gtk_window_set_icon_from_file(GTK_WINDOW(window),"/home/jihed/study/calculator/icon.png",NULL);
+gtk_window_set_icon_from_file(GTK_WINDOW(window),"icon.png",NULL);
 
 //Display
 
