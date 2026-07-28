@@ -22,6 +22,22 @@ gtk_init(&argc , &argv);
 
 printf ("hello world/n");
 
+// Create css provider
+    GtkCssProvider *provider = gtk_css_provider_new();
+
+    // Load CSS styling rules: set larger font for display entry and buttons
+    gtk_css_provider_load_from_data(provider,
+        "entry { font-size: 32px; font-weight: bold; }\n"
+        "button { font-size: 24px; }\n",
+        -1, NULL);
+
+    // Apply the CSS rules to the default screen
+    gtk_style_context_add_provider_for_screen(
+        gdk_screen_get_default(),
+        GTK_STYLE_PROVIDER(provider),
+        GTK_STYLE_PROVIDER_PRIORITY_APPLICATION
+    );
+
 //window creation 
 
 GtkWidget*window =gtk_window_new(GTK_WINDOW_TOPLEVEL);
@@ -42,6 +58,10 @@ gtk_widget_set_size_request(display, -1, 80);//default in gtk -1
 
 gtk_widget_set_hexpand(display, TRUE);  // expand horizontally
 gtk_widget_set_vexpand(display, TRUE);  // expand vertically
+
+// add the margin of screan
+gtk_widget_set_margin_bottom(display, 20);
+
 // box creation 
 GtkWidget *box = gtk_box_new(GTK_ORIENTATION_VERTICAL,10);
 
@@ -51,6 +71,9 @@ gtk_box_pack_start(GTK_BOX(box), display, FALSE, FALSE, 0);
 
 gtk_widget_set_hexpand(box, TRUE);  // expand horizontally
 gtk_widget_set_vexpand(box, TRUE);  // expand vertically
+
+
+
 //grid creation
 
 GtkWidget *grid = gtk_grid_new();
@@ -64,6 +87,12 @@ gtk_grid_set_row_spacing(GTK_GRID(grid),3);
 gtk_grid_set_column_spacing(GTK_GRID(grid),3);
 
 gtk_box_pack_start(GTK_BOX(box), grid, TRUE, TRUE, 0);
+
+// space between buttons
+gtk_grid_set_row_spacing(GTK_GRID(grid), 5);
+gtk_grid_set_column_spacing(GTK_GRID(grid), 5);
+
+
 //bottons creation 
 
 GtkWidget * button_1 = createButton(grid,"1",1,3,1,1);
