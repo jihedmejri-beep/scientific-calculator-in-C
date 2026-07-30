@@ -95,28 +95,42 @@ gtk_grid_set_column_spacing(GTK_GRID(grid), 5);
 
 //bottons creation 
 
-GtkWidget * button_1 = createButton(grid,"1",1,3,1,1);
-GtkWidget * button_2 = createButton(grid,"2",2,3,1,1);
+GtkWidget *sin_button = createButton(grid, "sin", 1, 1, 1, 1);
+GtkWidget *cos_button = createButton(grid, "cos", 2, 1, 1, 1);
+GtkWidget *tan_button = createButton(grid, "tan", 3, 1, 1, 1);
+GtkWidget *ln_button = createButton(grid, "ln", 4, 1, 1, 1);
+GtkWidget *e_button = createButton(grid, "e", 5, 1, 1, 1);
 
-GtkWidget * button_3 = createButton(grid,"3",3,3,1,1);
-GtkWidget * button_4 = createButton(grid,"4",1,2,1,1);
 
-GtkWidget * button_5 = createButton(grid,"5",2,2,1,1);
-GtkWidget * button_6 = createButton(grid,"6",3,2,1,1);
+GtkWidget *log_button = createButton(grid, "log", 1, 2, 1, 1);
+GtkWidget *pow_button = createButton(grid, "^", 2, 2, 1, 1);
+GtkWidget *prim_button = createButton(grid, "primitive", 3, 2, 1, 1);
+GtkWidget *mode_button = createButton(grid, "mode", 4, 2, 1, 1);
+GtkWidget *graph_button = createButton(grid, "graph", 5, 2, 1, 1);
 
-GtkWidget * button_7 = createButton(grid,"7",1,1,1,1);
-GtkWidget * button_8 = createButton(grid,"8",2,1,1,1);
 
-GtkWidget * button_9 = createButton(grid,"9",3,1,1,1);
-GtkWidget * button_0 = createButton(grid,"0",1,4,3,3);
+GtkWidget *btn_7 = createButton(grid, "7", 1, 3, 1, 1);
+GtkWidget *btn_8 = createButton(grid, "8", 2, 3, 1, 1);
+GtkWidget *btn_9 = createButton(grid, "9", 3, 3, 1, 1);
+GtkWidget *btn_mul = createButton(grid, "x", 4, 3, 1, 1);
+GtkWidget *btn_div = createButton(grid, "÷", 5, 3, 1, 1);
 
-GtkWidget * button_plus = createButton(grid,"+",4,2,1,1);
-GtkWidget * button_minus = createButton(grid,"-",5,2,1,1);
 
-GtkWidget * button_multiplication = createButton(grid,"x",4,1,1,1);
-GtkWidget * button_division = createButton(grid,"÷",5,1,1,1);
+GtkWidget *btn_4 = createButton(grid, "4", 1, 4, 1, 1);
+GtkWidget *btn_5 = createButton(grid, "5", 2, 4, 1, 1);
+GtkWidget *btn_6 = createButton(grid, "6", 3, 4, 1, 1);
+GtkWidget *btn_add = createButton(grid, "+", 4, 4, 1, 1);
+GtkWidget *btn_sub = createButton(grid, "-", 5, 4, 1, 1);
 
-GtkWidget * button_equal  = createButton(grid,"=",4,4,3,3);
+
+GtkWidget *btn_1 = createButton(grid, "1", 1, 5, 1, 1);
+GtkWidget *btn_2 = createButton(grid, "2", 2, 5, 1, 1);
+GtkWidget *btn_3 = createButton(grid, "3", 3, 5, 1, 1);
+
+
+GtkWidget *btn_0 = createButton(grid, "0", 1, 6, 1, 1); 
+GtkWidget *btn_pi = createButton(grid, "π", 2, 6, 1, 1);
+GtkWidget *btn_eq = createButton(grid, "=", 3, 6, 2, 1);
 
 g_signal_connect(window,"destroy",G_CALLBACK(gtk_main_quit),NULL);
 gtk_widget_show_all(window);
