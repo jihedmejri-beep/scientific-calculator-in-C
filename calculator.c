@@ -12,6 +12,21 @@ GtkWidget * createButton(GtkWidget * grid,char * text,int column , int row ,int 
 	gtk_grid_attach(GTK_GRID(grid), button, column,row , spaceColumnsTaken, spaceRowsTaken);
 	return button;}
 
+    void load_css(void) {
+    GtkCssProvider *provider = gtk_css_provider_new();
+    GdkDisplay *display = gdk_display_get_default();
+    GdkScreen *screen = gdk_display_get_default_screen(display);
+
+    gtk_style_context_add_provider_for_screen(screen,
+                                              GTK_STYLE_PROVIDER(provider),
+                                              GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
+
+    // link of css file
+    gtk_css_provider_load_from_path(provider, "calculator.css", NULL);
+    
+    g_object_unref(provider);
+}
+
 // main function
 	
 int main (int argc, char * argv[]){
@@ -19,6 +34,9 @@ int main (int argc, char * argv[]){
 const char * title = "Calculator";
 
 gtk_init(&argc , &argv);
+
+// load of css file
+load_css();
 
 printf ("hello world/n");
 
@@ -42,6 +60,9 @@ printf ("hello world/n");
 
 GtkWidget*window =gtk_window_new(GTK_WINDOW_TOPLEVEL);
 
+GtkStyleContext *context0 = gtk_widget_get_style_context(window);
+gtk_style_context_add_class(context0, "window");
+
 gtk_window_set_title(GTK_WINDOW(window),title);
 
 gtk_window_set_default_size(GTK_WINDOW(window), 400, 550);
@@ -51,6 +72,9 @@ gtk_window_set_icon_from_file(GTK_WINDOW(window),"icon.png",NULL);
 //Display
 
 GtkWidget *display = gtk_entry_new();
+context0 = gtk_widget_get_style_context(display);
+gtk_style_context_add_class(context0, "display");
+
 
 gtk_editable_set_editable(GTK_EDITABLE(display), FALSE);
 
@@ -96,17 +120,46 @@ gtk_grid_set_column_spacing(GTK_GRID(grid), 5);
 //bottons creation 
 
 GtkWidget *sin_button = createButton(grid, "sin", 1, 1, 1, 1);
-GtkWidget *cos_button = createButton(grid, "cos", 2, 1, 1, 1);
-GtkWidget *tan_button = createButton(grid, "tan", 3, 1, 1, 1);
-GtkWidget *ln_button = createButton(grid, "ln", 4, 1, 1, 1);
-GtkWidget *e_button = createButton(grid, "e", 5, 1, 1, 1);
 
+// give a class to an element 
+GtkStyleContext *context = gtk_widget_get_style_context(sin_button);
+gtk_style_context_add_class(context, "sin");
+
+GtkWidget *cos_button = createButton(grid, "cos", 2, 1, 1, 1);
+context = gtk_widget_get_style_context(cos_button);
+gtk_style_context_add_class(context, "sin");
+
+GtkWidget *tan_button = createButton(grid, "tan", 3, 1, 1, 1);
+context = gtk_widget_get_style_context(tan_button);
+gtk_style_context_add_class(context, "sin");
+
+GtkWidget *ln_button = createButton(grid, "ln", 4, 1, 1, 1);
+context = gtk_widget_get_style_context(ln_button);
+gtk_style_context_add_class(context, "sin");
+
+GtkWidget *e_button = createButton(grid, "e", 5, 1, 1, 1);
+context = gtk_widget_get_style_context(e_button);
+gtk_style_context_add_class(context, "sin");
 
 GtkWidget *log_button = createButton(grid, "log", 1, 2, 1, 1);
+context = gtk_widget_get_style_context(log_button);
+gtk_style_context_add_class(context, "sin");
+
 GtkWidget *pow_button = createButton(grid, "^", 2, 2, 1, 1);
+context = gtk_widget_get_style_context(pow_button);
+gtk_style_context_add_class(context, "sin");
+
 GtkWidget *prim_button = createButton(grid, "primitive", 3, 2, 1, 1);
+GtkStyleContext * context2 = gtk_widget_get_style_context(prim_button);
+gtk_style_context_add_class(context2, "prim");
+
 GtkWidget *mode_button = createButton(grid, "mode", 4, 2, 1, 1);
+context2 = gtk_widget_get_style_context(mode_button);
+gtk_style_context_add_class(context2, "prim");
+
 GtkWidget *graph_button = createButton(grid, "graph", 5, 2, 1, 1);
+context2 = gtk_widget_get_style_context(graph_button);
+gtk_style_context_add_class(context2, "prim");
 
 
 GtkWidget *btn_7 = createButton(grid, "7", 1, 3, 1, 1);
