@@ -1,27 +1,64 @@
+.c {
+    background-image: none;
+    background-color: rgba(164, 22, 22, 0.6); /* 0.6 means 60% solid, 40% transparent */
+    color: white;
+    font-size: 20px;
+}
+
 .sin {
     background-image: none;
-    background-color: #2b2b2b;
+    background-color: rgba(20, 30, 60, 0.6); /* 0.6 means 60% solid, 40% transparent */
     color: white;
     font-size: 20px;
 }
 
 .prim {
     background-image: none;
-    background-color: #2b2b2b;
+    background-color: rgba(20, 30, 60, 0.6);
     color: white;
     font-size: 20px;
 }
 
+/*@keyframes move-space {
+    from { background-position: 0px 0px; }
+    to { background-position: 675px 1200px; } 
+} */
+
+
 .window {
-    background-image: none;
-    background-color: #42454a ;
-    color: white;
-    font-size: 20px;
+    
+    background-image: url("icon22.jpg");
+    background-size: cover;   
+    background-position: center;
+    background-repeat: no-repeat;
+    /*animation: move-space 20s linear infinite;*/
 }
 
 .display{
     background-image: none;
-    background-color: #FFFFFF;
+    background-color: #ffffff;
+    color: white;
+    font-size: 20px;
+}
+
+.num {
+    background-image: none;
+    background-color: rgba(20, 30, 60, 0.6); /* 0.6 means 60% solid, 40% transparent */
+    color: white;
+    font-size: 20px;
+
+}
+
+.op {
+    background-image: none;
+    background-color: rgba(212, 136, 23, 0.6); /* 0.6 means 60% solid, 40% transparent */
+    color: white;
+    font-size: 20px;
+}
+
+.normale {
+    background-image: none;
+    background-color: rgba(20, 30, 60, 0.6); /* 0.6 means 60% solid, 40% transparent */
     color: white;
     font-size: 20px;
 }

@@ -65,7 +65,7 @@ gtk_style_context_add_class(context0, "window");
 
 gtk_window_set_title(GTK_WINDOW(window),title);
 
-gtk_window_set_default_size(GTK_WINDOW(window), 400, 550);
+gtk_window_set_default_size(GTK_WINDOW(window), 450,650);
 
 gtk_window_set_icon_from_file(GTK_WINDOW(window),"icon.png",NULL);
 
@@ -119,10 +119,13 @@ gtk_grid_set_column_spacing(GTK_GRID(grid), 5);
 
 //bottons creation 
 
-GtkWidget *sin_button = createButton(grid, "sin", 1, 1, 1, 1);
+GtkWidget *c_button = createButton(grid, "C", 4, 5, 2, 1);
+GtkStyleContext *context = gtk_widget_get_style_context(c_button);
+gtk_style_context_add_class(context, "c");
 
+GtkWidget *sin_button = createButton(grid, "sin", 1, 1, 1, 1);
 // give a class to an element 
-GtkStyleContext *context = gtk_widget_get_style_context(sin_button);
+context = gtk_widget_get_style_context(sin_button);
 gtk_style_context_add_class(context, "sin");
 
 GtkWidget *cos_button = createButton(grid, "cos", 2, 1, 1, 1);
@@ -163,27 +166,71 @@ gtk_style_context_add_class(context2, "prim");
 
 
 GtkWidget *btn_7 = createButton(grid, "7", 1, 3, 1, 1);
+GtkStyleContext * context3 = gtk_widget_get_style_context(btn_7);
+gtk_style_context_add_class(context3, "num");
+
 GtkWidget *btn_8 = createButton(grid, "8", 2, 3, 1, 1);
+context3 = gtk_widget_get_style_context(btn_8);
+gtk_style_context_add_class(context3, "num");
+
 GtkWidget *btn_9 = createButton(grid, "9", 3, 3, 1, 1);
+context3 = gtk_widget_get_style_context(btn_9);
+gtk_style_context_add_class(context3, "num");
+
 GtkWidget *btn_mul = createButton(grid, "x", 4, 3, 1, 1);
+context3 = gtk_widget_get_style_context(btn_mul);
+gtk_style_context_add_class(context3, "op");
+
 GtkWidget *btn_div = createButton(grid, "÷", 5, 3, 1, 1);
+context3 = gtk_widget_get_style_context(btn_div);
+gtk_style_context_add_class(context3, "op");
+
 
 
 GtkWidget *btn_4 = createButton(grid, "4", 1, 4, 1, 1);
+context3 = gtk_widget_get_style_context(btn_4);
+gtk_style_context_add_class(context3, "num");
+
 GtkWidget *btn_5 = createButton(grid, "5", 2, 4, 1, 1);
+context3 = gtk_widget_get_style_context(btn_5);
+gtk_style_context_add_class(context3, "num");
+
 GtkWidget *btn_6 = createButton(grid, "6", 3, 4, 1, 1);
+context3 = gtk_widget_get_style_context(btn_6);
+gtk_style_context_add_class(context3, "num");
+
 GtkWidget *btn_add = createButton(grid, "+", 4, 4, 1, 1);
+context3 = gtk_widget_get_style_context(btn_add);
+gtk_style_context_add_class(context3, "op");
+
 GtkWidget *btn_sub = createButton(grid, "-", 5, 4, 1, 1);
+context3 = gtk_widget_get_style_context(btn_sub);
+gtk_style_context_add_class(context3, "op");
 
 
 GtkWidget *btn_1 = createButton(grid, "1", 1, 5, 1, 1);
+context3 = gtk_widget_get_style_context(btn_1);
+gtk_style_context_add_class(context3, "num");
+
 GtkWidget *btn_2 = createButton(grid, "2", 2, 5, 1, 1);
+context3 = gtk_widget_get_style_context(btn_2);
+gtk_style_context_add_class(context3, "num");
+
 GtkWidget *btn_3 = createButton(grid, "3", 3, 5, 1, 1);
+context3 = gtk_widget_get_style_context(btn_3);
+gtk_style_context_add_class(context3, "num");
 
 
 GtkWidget *btn_0 = createButton(grid, "0", 1, 6, 1, 1); 
+GtkStyleContext *context4 = gtk_widget_get_style_context(btn_0);
+gtk_style_context_add_class(context4, "normale");
 GtkWidget *btn_pi = createButton(grid, "π", 2, 6, 1, 1);
+context4 = gtk_widget_get_style_context(btn_pi);
+gtk_style_context_add_class(context4, "normale");
 GtkWidget *btn_eq = createButton(grid, "=", 3, 6, 2, 1);
+context4 = gtk_widget_get_style_context(btn_eq);
+gtk_style_context_add_class(context4, "normale");
+
 
 g_signal_connect(window,"destroy",G_CALLBACK(gtk_main_quit),NULL);
 gtk_widget_show_all(window);
