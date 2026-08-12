@@ -37,7 +37,7 @@
 .display{
     background-image: none;
     background-color: #ffffff;
-    color: white;
+    color: rgb(0, 0, 0);
     font-size: 20px;
 }
 
