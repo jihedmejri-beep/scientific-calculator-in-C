@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <gtk/gtk.h>
+#include <math.h>
 
 double first_num = 0; // store the first number
 char operation = 0;   // store the opperation
@@ -82,6 +83,36 @@ void on_equal_clicked(GtkButton *button, gpointer user_data) {
 
     // application of the opp
     switch (operation) {
+        case 's': {
+                double rad = second_num * (M_PI / 180.0);
+                result = sin(rad);
+                break;
+            }
+        case 'c': {
+                double rad = second_num * (M_PI / 180.0);
+                result = cos(rad);
+                break;
+            }
+        case 't': {
+double rad = second_num * (M_PI / 180.0);
+result = tan(rad);
+break;
+            }
+        case 'l': {
+                
+if (second_num > 0) {
+                    result = log(second_num) ;
+                    } 
+                else {
+                    gtk_entry_set_text(entry, "Error");
+                    return;
+                    }
+                    break;
+            }
+        case 'e': {
+result = exp(second_num);
+break;
+            }
         case '+':
             result = first_num + second_num;
             break;
@@ -334,6 +365,12 @@ g_signal_connect(btn_add, "clicked", G_CALLBACK(on_operation_clicked), entry);
 g_signal_connect(btn_sub, "clicked", G_CALLBACK(on_operation_clicked), entry);
 g_signal_connect(btn_mul, "clicked", G_CALLBACK(on_operation_clicked), entry);
 g_signal_connect(btn_div, "clicked", G_CALLBACK(on_operation_clicked), entry);
+
+g_signal_connect(sin_button, "clicked", G_CALLBACK(on_operation_clicked), entry);
+g_signal_connect(cos_button, "clicked", G_CALLBACK(on_operation_clicked), entry);
+g_signal_connect(tan_button, "clicked", G_CALLBACK(on_operation_clicked), entry);
+g_signal_connect(ln_button, "clicked", G_CALLBACK(on_operation_clicked), entry);
+g_signal_connect(e_button, "clicked", G_CALLBACK(on_operation_clicked), entry);
 
 // call equal fonction
 g_signal_connect(btn_eq, "clicked", G_CALLBACK(on_equal_clicked), entry);
