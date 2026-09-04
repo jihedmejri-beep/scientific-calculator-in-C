@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <gtk/gtk.h>
 #include <math.h>
-
+#include <ctype.h>
 double first_num = 0; // store the first number
 char operation = 0;   // store the opperation
 
@@ -29,6 +29,50 @@ GtkWidget * createButton(GtkWidget * grid,char * text,int column , int row ,int 
     gtk_css_provider_load_from_path(provider, "calculator.css", NULL);
     
     g_object_unref(provider);
+}
+
+char* replace_pi(const char *input) {
+    if (!input) return NULL;
+    GString *result = g_string_new("");
+
+    for (int i = 0; input[i] != '\0'; i++) {
+        // Check if current character matches the "π" symbol (2 bytes in UTF-8)
+        if (strncmp(&input[i], "π", strlen("π")) == 0) {
+            
+            // Check if π is preceded by a digit or decimal point
+            if (i > 0 && (isdigit((unsigned char)input[i - 1]) || input[i - 1] == '.')) {
+                
+                //  Move backward to find the start of the preceding number
+                int start = i - 1;
+                while (start >= 0 && (isdigit((unsigned char)input[start]) || input[start] == '.')) {
+                    start--;
+                }
+                start++; // Adjust index to the first digit of the number
+
+                //  Extract the preceding number string and convert with atof()
+                int num_len = i - start;
+                char num_buf[64];
+                strncpy(num_buf, &input[start], num_len);
+                num_buf[num_len] = '\0';
+                double num = atof(num_buf);
+
+                //  Remove the unmultiplied digits from result, then append (num * M_PI)
+                g_string_truncate(result, result->len - num_len);
+                g_string_append_printf(result, "%.10g", num * M_PI);
+
+            } else {
+                //  If no number precedes π, just append the value of π
+                g_string_append_printf(result, "%.10g", M_PI);
+            }
+
+            i += strlen("π") - 1; // Skip remaining bytes of "π"
+        } else {
+            // Append regular characters as-is
+            g_string_append_c(result, input[i]);
+        }
+    }
+
+    return g_string_free(result, FALSE);
 }
 
 //put numbers on display's screan
@@ -60,16 +104,37 @@ void on_clear_clicked(GtkButton *button, gpointer user_data) {
 void on_operation_clicked(GtkButton *button, gpointer user_data) {
     GtkEntry *entry = GTK_ENTRY(user_data);
     
-    // store the first number
-    const gchar *text = gtk_entry_get_text(entry);
-    first_num = atof(text);
+    // read and clean the text
+    const gchar *raw_text = gtk_entry_get_text(entry);
+    char *clean_text = replace_pi(raw_text);
     
-    // store the oppertion
+    // transform the first num
+    first_num = atof(clean_text);
+    
+    // free memory
+    g_free(clean_text);
+    
+    // save the operation and clean the display
     const gchar *op_text = gtk_button_get_label(button);
-    operation = op_text[0]; // نأخذ أول حرف من النص
-    
-    // clear
+    operation = op_text[0];
     gtk_entry_set_text(entry, "");
+}
+
+//pi fonction
+void on_pi_button_clicked(GtkButton *button, gpointer user_data) {
+    GtkEntry *entry = GTK_ENTRY(user_data);
+    
+    // read text from the screan
+    const gchar *current_text = gtk_entry_get_text(entry);
+    
+    // merge the text with "π"
+    gchar *new_text = g_strdup_printf("%sπ", current_text);
+    
+    // display the new text
+    gtk_entry_set_text(entry, new_text);
+    
+    // free the memory
+    g_free(new_text);
 }
 
 // equal fonction
@@ -77,8 +142,11 @@ void on_equal_clicked(GtkButton *button, gpointer user_data) {
     GtkEntry *entry = GTK_ENTRY(user_data);
     
     // read second number
-    const gchar *text = gtk_entry_get_text(entry);
-    double second_num = atof(text);
+    const gchar *raw_text = gtk_entry_get_text(entry);
+    char *clean_text = replace_pi(raw_text);
+    double second_num = atof(clean_text);
+    g_free(clean_text); // 🧹 Free memory after conversion
+    
     double result = 0.0;
 
     // application of the opp
@@ -375,6 +443,8 @@ g_signal_connect(e_button, "clicked", G_CALLBACK(on_operation_clicked), entry);
 // call equal fonction
 g_signal_connect(btn_eq, "clicked", G_CALLBACK(on_equal_clicked), entry);
 
+// call pi fonction
+g_signal_connect(btn_pi, "clicked",G_CALLBACK(on_pi_button_clicked), entry);
 
 g_signal_connect(window,"destroy",G_CALLBACK(gtk_main_quit),NULL);
 gtk_widget_show_all(window);
