@@ -32,49 +32,60 @@ GtkWidget * createButton(GtkWidget * grid,char * text,int column , int row ,int 
 }
 
 char* replace_pi(const char *input) {
+    // Safety check: Return NULL if the input pointer is uninitialized or invalid
     if (!input) return NULL;
+    
+    // Allocate a new dynamic GLib string to build our modified math expression
     GString *result = g_string_new("");
 
+    // Loop through each character of the input string until reaching the null terminator '\0'
     for (int i = 0; input[i] != '\0'; i++) {
-        // Check if current character matches the "π" symbol (2 bytes in UTF-8)
+        
+        // Check if the current position matches the multi-byte UTF-8 symbol "π"
         if (strncmp(&input[i], "π", strlen("π")) == 0) {
             
-            // Check if π is preceded by a digit or decimal point
+            // Check if a digit or decimal point directly precedes "π" (implicit multiplication case)
             if (i > 0 && (isdigit((unsigned char)input[i - 1]) || input[i - 1] == '.')) {
                 
-                //  Move backward to find the start of the preceding number
+                // Step 1: Scan backwards to locate the starting index of the preceding number
                 int start = i - 1;
                 while (start >= 0 && (isdigit((unsigned char)input[start]) || input[start] == '.')) {
-                    start--;
+                    start--; // Move left through all digits and decimal points
                 }
-                start++; // Adjust index to the first digit of the number
+                start++; // Reset index to point precisely at the first digit of the number
 
-                //  Extract the preceding number string and convert with atof()
-                int num_len = i - start;
+                // Step 2: Extract the preceding number substring into a temporary buffer
+                int num_len = i - start; // Length of the preceding number string
                 char num_buf[64];
                 strncpy(num_buf, &input[start], num_len);
-                num_buf[num_len] = '\0';
+                num_buf[num_len] = '\0'; // Manually null-terminate the buffer for C-string functions
+                
+                // Convert the extracted substring into a double-precision floating-point number
                 double num = atof(num_buf);
 
-                //  Remove the unmultiplied digits from result, then append (num * M_PI)
+                // Step 3: Remove the raw number digits that were previously added to 'result'
                 g_string_truncate(result, result->len - num_len);
+                
+                // Multiply (num * M_PI) and append the formatted numerical product into 'result'
                 g_string_append_printf(result, "%.10g", num * M_PI);
 
             } else {
-                //  If no number precedes π, just append the value of π
+                // Step 4: If no number precedes "π" (e.g., "+π" or "π*2"), append π's value directly
                 g_string_append_printf(result, "%.10g", M_PI);
             }
 
-            i += strlen("π") - 1; // Skip remaining bytes of "π"
+            // Fast-forward index 'i' to skip the second byte of the UTF-8 "π" symbol
+            i += strlen("π") - 1;
+            
         } else {
-            // Append regular characters as-is
+            // Append regular characters (digits, +, -, *, /) directly to the output buffer
             g_string_append_c(result, input[i]);
         }
     }
 
+    // Free the GString wrapper structure and return the raw dynamically allocated char* buffer
     return g_string_free(result, FALSE);
 }
-
 //put numbers on display's screan
 void on_digit_clicked(GtkButton *button, gpointer user_data) {
     GtkEntry *entry = GTK_ENTRY(user_data);
