@@ -177,17 +177,24 @@ double rad = second_num * (M_PI / 180.0);
 result = tan(rad);
 break;
             }
-        case 'l': {
-                
-if (second_num > 0) {
-                    result = log(second_num) ;
-                    } 
-                else {
-                    gtk_entry_set_text(entry, "Error");
-                    return;
-                    }
-                    break;
-            }
+        case 'n': {
+            if (second_num > 0) {
+                result = log(second_num);
+            } else {
+                gtk_entry_set_text(entry, "Error");
+                return;
+        }
+    }break;
+    case 'l': {
+        if (second_num > 0) {
+            result = log10(second_num);
+        } else {
+            gtk_entry_set_text(entry, "Error");
+            return;
+    }
+    break;
+}
+            
         case 'e': {
 result = exp(second_num);
 break;
@@ -209,13 +216,20 @@ break;
                 return;
             }
             break;
+        case '^':
+            result = pow(first_num, second_num);
+            if (isnan(result) || isinf(result)) {
+                gtk_entry_set_text(entry, "Error");
+                return;
+    }
+    break;
         default:
             return;
     }
 
     // transform number to text and put it in screan
     char result_str[32];
-    snprintf(result_str, sizeof(result_str), "%g", result); // %g لتنسيق الأرقام بشكل نظيف
+    snprintf(result_str, sizeof(result_str), "%g", result); 
     gtk_entry_set_text(entry, result_str);
 }
 
@@ -450,6 +464,9 @@ g_signal_connect(cos_button, "clicked", G_CALLBACK(on_operation_clicked), entry)
 g_signal_connect(tan_button, "clicked", G_CALLBACK(on_operation_clicked), entry);
 g_signal_connect(ln_button, "clicked", G_CALLBACK(on_operation_clicked), entry);
 g_signal_connect(e_button, "clicked", G_CALLBACK(on_operation_clicked), entry);
+g_signal_connect(pow_button, "clicked", G_CALLBACK(on_operation_clicked), entry);
+g_signal_connect(log_button, "clicked", G_CALLBACK(on_operation_clicked), entry);
+
 
 // call equal fonction
 g_signal_connect(btn_eq, "clicked", G_CALLBACK(on_equal_clicked), entry);
